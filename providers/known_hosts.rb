@@ -7,7 +7,7 @@ action :add do
 
   key = new_resource.key
   if key.nil?
-    results = `ssh-keyscan #{new_resource.hashed ? '-H ' : ''} #{Shellwords.escape(new_resource.host)}`
+    results = `ssh-keyscan #{new_resource.type ? '-t ' + new_resource.type : ''} #{new_resource.hashed ? '-H ' : ''} #{Shellwords.escape(new_resource.host)}`
     Chef::Application.fatal! results.strip if key =~ /getaddrinfo/
     key = results.strip
   end
